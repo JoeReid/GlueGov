@@ -20,7 +20,7 @@ class Table(Downloader):
             fileName
         )
 
-        Downloader.__init__(self, url, fileName)
+        Downloader.__init__(self, url, self.fileName)
 
 
 class CSVTable(Table, CSVParser):
