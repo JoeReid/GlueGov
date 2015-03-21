@@ -17,8 +17,12 @@ class Downloader(object):
             logging.info("File " + dest + " already exists: Not Downloading")
         else:
             logging.info("Downloading File: " + dest)
-            future = Downloader.downloadExecutor.submit(self._download)
-            future.result()
+            try:
+                future = Downloader.downloadExecutor.submit(self._download)
+                future.result()
+            except Exception:
+                logging.error("Downloading " + dest + " failure!")
+
             logging.info("Downloading " + dest + ": Done")
 
     def _download(self):

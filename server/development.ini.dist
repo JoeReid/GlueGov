@@ -29,6 +29,9 @@ session.reissue_time         = None -> None
 # Templates --------------------------------------------------------------------
 mako.directories = gluegov:templates
 
+# GlueGov variables
+gluegov.data_directory = data
+
 
 ###
 # wsgi server configuration
