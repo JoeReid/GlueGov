@@ -64,9 +64,6 @@ class Table(object):
 
         return table
 
-    def __repr__(self):
-        return self.records
-
 
 class TableDownloadMixin(Table, Downloader):
 
