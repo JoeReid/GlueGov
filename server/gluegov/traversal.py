@@ -17,7 +17,7 @@ class TableResource(object):
 
     @property
     def template(self):
-        return 'home'  # TODO: could be made to look at the Table object .. could be a param like that
+        return 'table'  # TODO: could be made to look at the Table object .. could be a param like that
 
 
 class TableGroupResource(object):

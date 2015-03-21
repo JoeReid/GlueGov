@@ -1,6 +1,6 @@
 <%inherit file="_base.mako"/>
 
-<h1>group</h1>
+<h1>${data.get('group')}</h1>
 
 <ul>
 % for name, fields in data.get('tables', {}).items():

@@ -22,15 +22,15 @@ class Table(object):
         self.fields = []
 
     def _filter(self, func, value):
-        types = [int, float]
-        for type in types:
+        types = [str, int, float]
+        for t in types:
             try:
-                type(value)
+                t(value)
             except:
                 pass
             else:
-                value = type(value)
-                type = type
+                value = t(value)
+                type = t
 
         return [record for record in self.records if func(record, value, type)]
 
