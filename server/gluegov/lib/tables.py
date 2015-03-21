@@ -44,23 +44,25 @@ class Table(object):
 
     def proccesQuery(self, query):
         table = self
-        if query.startswith('?'):
-            query = query[1:]
 
-        # loop over the commands
-        for block in query.split("&"):
-            (field, command) = block.split('=')
-            subcommands = command.split(':')
+        if query:
+            if query.startswith('?'):
+                query = query[1:]
 
-            if len(subcommands) < 2:
-                subcommand = "eq"
-                value = subcommands
-            else:
-                subcommand = subcommands[0]
-                value = subcommands[1]
+            # loop over the commands
+            for block in query.split("&"):
+                (field, command) = block.split('=')
+                subcommands = command.split(':')
 
-            if subcommand in Table.SUPPORTED_FUNCS:
-                table = table.__getattribute__(subcommand)(field, value)
+                if len(subcommands) < 2:
+                    subcommand = "eq"
+                    value = subcommands
+                else:
+                    subcommand = subcommands[0]
+                    value = subcommands[1]
+
+                if subcommand in Table.SUPPORTED_FUNCS:
+                    table = table.__getattribute__(subcommand)(field, value)
 
         return table
 
