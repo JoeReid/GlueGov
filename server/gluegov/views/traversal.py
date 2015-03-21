@@ -2,10 +2,11 @@ from . import web, action_ok, action_error
 
 
 @web
-def test(request):
-    print('test')
-    #import pdb ; pdb.set_trace()
-    return action_ok()
+def home(request):
+    root = request.context
+    return action_ok(data={
+        'groups': root.groups
+    })
 
 
 @web

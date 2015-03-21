@@ -45,3 +45,11 @@ class TraversalRoot(object):
     def __getitem__(self, group):
         TableDownloadMixin.registry[group]  # Will raise KeyError if group not exisit
         return TableGroupResource(self.request, group)
+
+    @property
+    def groups(self):
+        return tuple(TableDownloadMixin.registry.keys())
+
+    @property
+    def template(self):
+        return 'home'

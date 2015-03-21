@@ -5,7 +5,7 @@
 <ul>
 % for name, fields in data.get('tables', {}).items():
     <li>
-        ${name}
+        <a href="${name}">${name}</a>
         <ul>
         % for field in fields:
             <li>${field}</li>
