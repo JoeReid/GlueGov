@@ -3,6 +3,8 @@ from pyramid.config import Configurator
 import pyramid.events
 from pyramid.session import SignedCookieSessionFactory
 
+from .traversal import GlobalRootFactory
+
 from externals.lib.misc import convert_str_with_type, extract_subkeys, json_serializer
 from externals.lib.pyramid_helpers.auto_format import registered_formats
 
@@ -16,7 +18,7 @@ from .templates import helpers as template_helpers
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    config = Configurator(settings=settings)
+    config = Configurator(settings=settings, root_factory=GlobalRootFactory)
     config.include('pyramid_mako')
 
     # Parse/Convert setting keys that have specifyed datatypes
@@ -34,7 +36,8 @@ def main(global_config, **settings):
 
     config.add_static_view('static', 'static', cache_max_age=3600)
 
-    config.add_route('home', append_format_pattern('/'))
+    #config.add_route('home', append_format_pattern('/'))
+    config.add_view('gluegov.views.traversal.test', context='gluegov.traversal.TraversalResource')
 
     config.add_subscriber(add_render_globals_to_template, pyramid.events.BeforeRender)
 
