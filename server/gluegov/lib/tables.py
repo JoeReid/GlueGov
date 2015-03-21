@@ -4,6 +4,7 @@ Using the word table, due to lack of a better idea!
 """
 import os
 import configparser
+from collections import defaultdict
 
 from functools import partial
 from gluegov.lib.parsers import CSVParser
@@ -16,12 +17,9 @@ config.read("development.ini")
 class Table(object):
     SUPPORTED_FUNCS = ["eq", "gt", "lt", "gte", "lte", "neq"]
 
-    def __init__(self, group, name, records):
-        self.group = group
-        self.name = name
+    def __init__(self, records):
         self.records = records
-
-        self.tPartial = partial(Table, self.group, self.name)
+        self.tPartial = partial(Table)
 
     def _filter(self, func):
         return [elem for elem in filter(func, self.records)]
@@ -72,8 +70,11 @@ class Table(object):
 
 class TableDownloadMixin(Table, Downloader):
 
+    registry = defaultdict(dict)
+
     def __init__(self, group, name, url, fileName):
         Table.__init__(self, [])
+        TableDownloadMixin.registry[group][name] = self
         self.fileName = os.path.join(
             os.getcwd(), config.get("app:main", "gluegov.data_directory"),
             fileName
@@ -83,12 +84,11 @@ class TableDownloadMixin(Table, Downloader):
 
 
 class CSVTable(TableDownloadMixin, CSVParser):
-
     def __init__(self, group, name, url, fileName):
         TableDownloadMixin.__init__(self, group, name, url, fileName)
         CSVParser.__init__(self, self.fileName)
 
 
 class XLSTable(TableDownloadMixin):
-    def __init__(self, url, fileName):
-        TableDownloadMixin.__init__(self, url, fileName)
+    def __init__(self, group, name, url, fileName):
+        TableDownloadMixin.__init__(self, group, name, url, fileName)
