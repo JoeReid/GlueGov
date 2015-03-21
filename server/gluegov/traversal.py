@@ -5,26 +5,11 @@ def GlobalRootFactory(request):
     return TraversalRoot(request)
 
 
-class TraversalResource(object):
-    def __init__(self, root, route=()):
-        self.root = root
-        self.route = route
-
-    def __getitem__(self, key):
-        print('__getitem__({0})'.format(key))
-        raise KeyError
-
-    @property
-    def template(self):
-        return 'home'  # Temp hack, needs further consideration
-
-
-class TableNameResorce(object):
+class TableResource(object):
     def __init__(self, request, group, name):
         self.request = request
         self.group = group
         self.name = name
-        #import pdb ; pdb.set_trace()
 
     @property
     def table(self):
@@ -42,10 +27,10 @@ class TableGroupResource(object):
 
     def __getitem__(self, name):
         TableDownloadMixin.registry[self.group][name]  # Will raise KeyError if group not exisit
-        return TableNameResorce(self.request, self.group, name)
+        return TableResource(self.request, self.group, name)
 
 
-class TraversalRoot(TraversalResource):
+class TraversalRoot(object):
     def __init__(self, request):
         self.request = request
 
