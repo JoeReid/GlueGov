@@ -11,9 +11,12 @@ def test(request):
 @web
 def group(request):
     group = request.context
-    return action_ok(data={'tables': {
-        name: table.fields for name, table in group.tables.items()
-    }})
+    return action_ok(data={
+        'group': group.group,
+        'tables': {
+            name: table.fields for name, table in group.tables.items()
+        }
+    })
 
 
 @web
