@@ -4,9 +4,8 @@ Using the word table, due to lack of a better idea!
 """
 import os
 import configparser
-from collections import defaultdict
 
-from functools import partial
+from collections import defaultdict
 from gluegov.lib.parsers import CSVParser
 from gluegov.lib.download.downloader import Downloader
 
@@ -19,28 +18,28 @@ class Table(object):
 
     def __init__(self, records):
         self.records = records
-        self.tPartial = partial(Table)
+        self.fields = []
 
     def _filter(self, func):
         return [elem for elem in filter(func, self.records)]
 
     def eq(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] == value))
+        return Table(self._filter(lambda d: d[field] == value))
 
     def gt(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] > value))
+        return Table(self._filter(lambda d: d[field] > value))
 
     def lt(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] < value))
+        return Table(self._filter(lambda d: d[field] < value))
 
     def gte(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] >= value))
+        return Table(self._filter(lambda d: d[field] >= value))
 
     def lte(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] <= value))
+        return Table(self._filter(lambda d: d[field] <= value))
 
     def neq(self, field, value):
-        return self.tPartial(self._filter(lambda d: d[field] != value))
+        return Table(self._filter(lambda d: d[field] != value))
 
     def proccesQuery(self, query):
         table = self
