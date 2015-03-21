@@ -1,0 +1,70 @@
+{
+    "jquery": {
+        "source": "http://code.jquery.com/jquery-VERSION.min.js",
+        "version": "2.1.3",
+        "target": "static/jquery.min.js"
+    },
+
+    "jquery_map": {
+        "source": "http://code.jquery.com/jquery-VERSION.min.map",
+        "version": "2.1.1",
+        "target": "static/jquery-VERSION.min.map"
+    },
+    
+    "jquery_cookie": {
+        "source": "http://raw.github.com/carhartl/jquery-cookie/vVERSION/jquery.cookie.js",
+        "version": "1.4.0",
+        "target": "static/jquery.cookie.js"
+    },
+
+    "jquery_mobile": {
+        "source": "http://code.jquery.com/mobile/VERSION/jquery.mobile-VERSION.min.js",
+        "version": "1.4.5",
+        "target": "static/jquery.mobile.min.js"
+    },
+    "jquery_mobile_css": {
+        "source": "http://code.jquery.com/mobile/VERSION/jquery.mobile-VERSION.min.css",
+        "version": "1.4.5",
+        "target": "static/jquery.mobile.min.css"
+    },
+    "jquery_mobile_map": {
+        "source": "http://code.jquery.com/mobile/VERSION/jquery.mobile-VERSION.min.map",
+        "version": "1.4.5",
+        "target": "static/jquery.mobile-VERSION.min.map"
+    },
+    
+    "yui-reset": {
+        "source": "http://yui.yahooapis.com/VERSION/build/cssreset/cssreset-min.css",
+        "version": "3.18.1",
+        "target": "static/cssreset-min.css"
+    },
+
+    "bootstrap": {
+        "source": "http://raw.github.com/twbs/bootstrap/vVERSION/dist/",
+        "destination_subpath": "static",
+        "version": "3.3.4",
+        "target": [
+            "js/bootstrap.min.js",
+            "css/bootstrap-theme.min.css",
+            "css/bootstrap.min.css",
+            "fonts/glyphicons-halflings-regular.woff",
+            "fonts/glyphicons-halflings-regular.ttf",
+            "fonts/glyphicons-halflings-regular.eot",
+            "fonts/glyphicons-halflings-regular.svg"
+        ]
+    },
+        
+    "python_lib": {
+        "source": "https://raw.github.com/calaldees/libs/master/python3/",
+        "version": "0.0.1",
+        "target": [
+            "lib/__init__.py",
+            "lib/misc.py",
+            "lib/xml.py",
+            "lib/make_ini.py",
+            "lib/pyramid_helpers/__init__.py",
+            "lib/pyramid_helpers/auto_format.py",
+            "lib/pyramid_helpers/etag.py"
+        ]
+    }
+}
