@@ -70,7 +70,10 @@ dependency_download: dependency_downloader.py externals
 	env/bin/python dependency_downloader.py --destination externals
 	#source env/bin/activate && bower install --config.interactive=false --config.directory=./externals/
 
-install: development.ini GlueGov.egg-info dependency_download
+data_folder:
+	mkdir -p data
+
+install: development.ini GlueGov.egg-info dependency_download data_folder
 
 
 # Ini files --------------------------------------------------------------------

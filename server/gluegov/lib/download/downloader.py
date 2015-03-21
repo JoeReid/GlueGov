@@ -11,11 +11,19 @@ class Downloader(object):
         self.url = url
         self.dest = dest
 
+        logging.getLogger().setLevel(20)
+
         if os.path.isfile(dest):
-            logging.info("File " + dest + " already exists")
+            logging.info("File " + dest + " already exists: Not Downloading")
         else:
-            future = Downloader.downloadExecutor.submit(self._download)
-            future.result()
+            logging.info("Downloading File: " + dest)
+            try:
+                future = Downloader.downloadExecutor.submit(self._download)
+                future.result()
+            except Exception:
+                logging.error("Downloading " + dest + " failure!")
+
+            logging.info("Downloading " + dest + ": Done")
 
     def _download(self):
         response = requests.get(self.url)
