@@ -7,7 +7,7 @@ from csv import DictReader
 class Parser(object):
 
     def __init__(self, fileName):
-        self.records = None
+        self.records = []
         self.fileName = fileName
 
     def parse(self):

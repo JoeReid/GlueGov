@@ -13,12 +13,62 @@ config.read("development.ini")
 
 
 class Table(object):
-    pass
+    SUPPORTED_FUNCS = ["eq", "gt", "lt", "gte", "lte", "neq"]
+
+    def __init__(self, records):
+        self.records = records
+
+    def _filter(self, func):
+        return [elem for elem in filter(func, self.records)]
+
+    def eq(self, field, value):
+        return Table(self._filter(lambda d: d[field] == value))
+
+    def gt(self, field, value):
+        return Table(self._filter(lambda d: d[field] > value))
+
+    def lt(self, field, value):
+        return Table(self._filter(lambda d: d[field] < value))
+
+    def gte(self, field, value):
+        return Table(self._filter(lambda d: d[field] >= value))
+
+    def lte(self, field, value):
+        return Table(self._filter(lambda d: d[field] <= value))
+
+    def neq(self, field, value):
+        return Table(self._filter(lambda d: d[field] != value))
+
+    def proccesQuery(self, query):
+        table = self
+        if query.startswith('?'):
+            query = query[1:]
+
+        # loop over the commands
+        for block in query.split("&"):
+            (field, command) = block.split('=')
+            subcommands = command.split(':')
+
+            if len(subcommands) < 2:
+                subcommand = "eq"
+                value = subcommands
+            else:
+                subcommand = subcommands[0]
+                value = subcommands[1]
+
+            if subcommand in Table.SUPPORTED_FUNCS:
+                table = table.__getattribute__(subcommand)(field, value)
+
+        return table
+
+    def __repr__(self):
+        return self.records
 
 
 class TableDownloadMixin(Table, Downloader):
 
     def __init__(self, url, fileName):
+        Table.__init__(self, [])
         self.fileName = os.path.join(
             os.getcwd(), config.get("app:main", "gluegov.data_directory"),
             fileName
