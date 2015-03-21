@@ -20,26 +20,36 @@ class Table(object):
         self.records = records
         self.fields = []
 
-    def _filter(self, func):
-        return [elem for elem in filter(func, self.records)]
+    def _filter(self, func, value):
+        types = [int, float]
+        for type in types:
+            try:
+                type(value)
+            except:
+                pass
+            else:
+                value = type(value)
+                type = type
+
+        return [record for record in self.records if func(record, value, type)]
 
     def eq(self, field, value):
-        return Table(self._filter(lambda d: d[field] == value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) == v, value))
 
     def gt(self, field, value):
-        return Table(self._filter(lambda d: d[field] > value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) > v, value))
 
     def lt(self, field, value):
-        return Table(self._filter(lambda d: d[field] < value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) < v, value))
 
     def gte(self, field, value):
-        return Table(self._filter(lambda d: d[field] >= value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) >= v, value))
 
     def lte(self, field, value):
-        return Table(self._filter(lambda d: d[field] <= value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) <= v, value))
 
     def neq(self, field, value):
-        return Table(self._filter(lambda d: d[field] != value))
+        return Table(self._filter(lambda d, v, t: t(d[field]) != v, value))
 
     def proccesQuery(self, query):
         table = self
