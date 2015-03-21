@@ -83,6 +83,8 @@ class TableDownloadMixin(Table, Downloader):
     def __init__(self, group, name, url, fileName):
         Table.__init__(self, [])
         TableDownloadMixin.registry[group][name] = self
+        self.group = group
+        self.name = name
         self.fileName = os.path.join(
             os.getcwd(), config.get("app:main", "gluegov.data_directory"),
             fileName

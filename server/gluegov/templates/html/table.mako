@@ -1,21 +1,17 @@
 <%inherit file="_base.mako"/>
 
-<h1>table</h1>
-
-<%
-    keys = list(data.get('list')[0].keys()) if data.get('total', 0) > 0 else []
-%>
+<h1>${data.get('group')}: ${data.get('name')}</h1>
 
 <table>
 
-%for key in keys:
-<th>${key}</th>
+%for field in data.get('fields', []):
+<th>${field}</th>
 % endfor
 
 % for item in data.get('list'):
 <tr>
-% for key in keys:
-<td>${item[key]}</td>
+% for field in data.get('fields', []):
+<td>${item[field]}</td>
 % endfor
 </tr>
 % endfor
