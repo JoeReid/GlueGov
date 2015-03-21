@@ -15,6 +15,8 @@ requires = [
     'waitress',
     'python-dateutil',
     'decorator',
+    'requests',
+    'xlrd',
     ]
 
 setup(name='GlueGov',
