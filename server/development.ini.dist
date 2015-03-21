@@ -12,11 +12,23 @@ pyramid.debug_notfound = false
 pyramid.debug_routematch = false
 pyramid.default_locale_name = en
 pyramid.includes =
-    pyramid_debugtoolbar
+    #pyramid_debugtoolbar
 
 # By default, the toolbar only appears for clients from IP addresses
 # '127.0.0.1' and '::1'.
 # debugtoolbar.hosts = 127.0.0.1 ::1
+
+# Sessions ---------------------------------------------------------------------
+session.cookie_name          = _session
+session.secret               = cockNroll
+session.salt                 = pyramid.session.
+session.timeout              = 86400 -> int
+#session.max_age              = 86400 -> int
+session.reissue_time         = None -> None
+
+# Templates --------------------------------------------------------------------
+mako.directories = gluegov:templates
+
 
 ###
 # wsgi server configuration

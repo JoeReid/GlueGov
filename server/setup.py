@@ -10,9 +10,11 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 
 requires = [
     'pyramid',
-    'pyramid_chameleon',
+    'pyramid_mako',
     'pyramid_debugtoolbar',
     'waitress',
+    'python-dateutil',
+    'decorator',
     ]
 
 setup(name='GlueGov',
