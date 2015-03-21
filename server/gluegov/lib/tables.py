@@ -54,12 +54,11 @@ class Table(object):
                 (field, command) = block.split('=')
                 subcommands = command.split(':')
 
-                if len(subcommands) < 2:
-                    subcommand = "eq"
-                    value = subcommands
-                else:
+                if len(subcommands) >= 2:
                     subcommand = subcommands[0]
                     value = subcommands[1]
+                else:
+                    continue
 
                 if subcommand in Table.SUPPORTED_FUNCS:
                     table = table.__getattribute__(subcommand)(field, value)
