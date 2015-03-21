@@ -12,7 +12,11 @@ config = configparser.ConfigParser()
 config.read("development.ini")
 
 
-class Table(Downloader):
+class Table(object):
+    pass
+
+
+class TableDownloadMixin(Table, Downloader):
 
     def __init__(self, url, fileName):
         self.fileName = os.path.join(
@@ -23,8 +27,8 @@ class Table(Downloader):
         Downloader.__init__(self, url, self.fileName)
 
 
-class CSVTable(Table, CSVParser):
+class CSVTable(TableDownloadMixin, CSVParser):
 
     def __init__(self, url, fileName):
-        Table.__init__(self, url, fileName)
+        TableDownloadMixin.__init__(self, url, fileName)
         CSVParser.__init__(self, self.fileName)
