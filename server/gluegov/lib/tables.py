@@ -32,3 +32,8 @@ class CSVTable(TableDownloadMixin, CSVParser):
     def __init__(self, url, fileName):
         TableDownloadMixin.__init__(self, url, fileName)
         CSVParser.__init__(self, self.fileName)
+
+
+class XLSTable(TableDownloadMixin):
+    def __init__(self, url, fileName):
+        TableDownloadMixin.__init__(self, url, fileName)
