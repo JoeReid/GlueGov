@@ -7,6 +7,7 @@ import configparser
 
 from collections import defaultdict
 from gluegov.lib.parsers import CSVParser
+from gluegov.lib.parsers import XLSParser
 from gluegov.lib.download.downloader import Downloader
 
 config = configparser.ConfigParser()
@@ -96,6 +97,7 @@ class CSVTable(TableDownloadMixin, CSVParser):
         CSVParser.__init__(self, self.fileName)
 
 
-class XLSTable(TableDownloadMixin):
+class XLSTable(TableDownloadMixin, XLSParser):
     def __init__(self, group, name, url, fileName):
         TableDownloadMixin.__init__(self, group, name, url, fileName)
+        XLSParser.__init__(self, self.fileName)

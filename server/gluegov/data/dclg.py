@@ -17,7 +17,7 @@ XLSTable(
     "employmentdomain",
     "https://www.gov.uk/government/uploads/system/uploads/attachment_data/file/6874/1871534.xls",
     "employmentdomain.xls"
-)
+).parse(sheet=1, lastRow=32483)
 XLSTable(
     "dclg",
     "healthdomain",
