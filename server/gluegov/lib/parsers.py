@@ -39,6 +39,7 @@ class XLSParser(Parser):
 
         # get keys
         keylist = s.row_values(keyRow)
+        self.fields = keylist
 
         # for each line create dict and add to records
         for x in range(keyRow+1, lastRow):
