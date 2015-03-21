@@ -1,5 +1,7 @@
 import requests
 import concurrent.futures
+import logging
+import os.path
 
 
 class Downloader(object):
@@ -8,8 +10,12 @@ class Downloader(object):
     def __init__(self, url, dest):
         self.url = url
         self.dest = dest
-        future = Downloader.downloadExecutor.submit(self._download)
-        future.result()
+
+        if os.path.isfile(dest):
+            logging.info("File " + dest + " already exists")
+        else:
+            future = Downloader.downloadExecutor.submit(self._download)
+            future.result()
 
     def _download(self):
         response = requests.get(self.url)
