@@ -31,6 +31,7 @@ mako.directories = gluegov:templates
 
 # GlueGov variables
 gluegov.data_directory = data
+gluegov.api.default_limit = 200 -> int
 
 
 ###

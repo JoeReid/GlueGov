@@ -20,4 +20,15 @@ def group(request):
 def table(request):
     table = request.context.table
     table = table.proccesQuery(request.query_string)
-    return action_ok(data={'list': table.records})
+
+    records = table.records
+    total = len(records)
+    limit = int(request.params.get('limit', request.registry.settings.get('gluegov.api.default_limit')))
+    offset = int(request.params.get('offset', 0))
+
+    return action_ok(data={
+        'list': records[offset:offset + limit],
+        'total': total,
+        'offset': offset,
+        'limit': limit,
+    })
