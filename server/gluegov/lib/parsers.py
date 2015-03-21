@@ -11,15 +11,15 @@ class Parser(object):
         self.fileName = fileName
 
     def parse(self):
-        raise NotImplementedException
+        raise NotImplementedError
 
 
 class CSVParser(Parser, DictReader):
 
     def parse(self, *args, **kwargs):
         """ Parse the CSV file
-        :param args: arguments passed to cvs.DictReader
-        :param kwargs: keyword arguments passed to cvs.DictReader
+        :param args: arguments passed to csv.DictReader
+        :param kwargs: keyword arguments passed to csv.DictReader
         :return:
         """
         with open(self.fileName, "r") as f:
