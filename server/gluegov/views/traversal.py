@@ -9,6 +9,12 @@ def test(request):
 
 
 @web
+def group(request):
+    group = request.context
+    return action_ok(data={'names': tuple(group.names)})
+
+
+@web
 def table(request):
     table = request.context.table
     table = table.proccesQuery(request.query_string)

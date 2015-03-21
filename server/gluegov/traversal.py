@@ -29,6 +29,14 @@ class TableGroupResource(object):
         TableDownloadMixin.registry[self.group][name]  # Will raise KeyError if group not exisit
         return TableResource(self.request, self.group, name)
 
+    @property
+    def names(self):
+        return TableDownloadMixin.registry[self.group].keys()
+
+    @property
+    def template(self):
+        return 'group'
+
 
 class TraversalRoot(object):
     def __init__(self, request):

@@ -37,6 +37,7 @@ def main(global_config, **settings):
     config.add_static_view('static', 'static', cache_max_age=3600)
 
     #config.add_route('home', append_format_pattern('/'))
+    config.add_view('gluegov.views.traversal.group', context='gluegov.traversal.TableGroupResource')
     config.add_view('gluegov.views.traversal.table', context='gluegov.traversal.TableResource')
 
     config.add_subscriber(add_render_globals_to_template, pyramid.events.BeforeRender)
