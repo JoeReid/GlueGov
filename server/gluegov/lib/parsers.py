@@ -23,5 +23,7 @@ class CSVParser(Parser, DictReader):
         :return:
         """
         with open(self.fileName, "r") as f:
-            self.records = [r for r in DictReader(f, *args, **kwargs)]
+            dictReader = DictReader(f, *args, **kwargs)
+            self.fields = dictReader.fieldnames
+            self.records = [r for r in dictReader]
             return self
