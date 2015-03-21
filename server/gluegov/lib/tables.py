@@ -5,6 +5,7 @@ Using the word table, due to lack of a better idea!
 import os
 import configparser
 
+from functools import partial
 from gluegov.lib.parsers import CSVParser
 from gluegov.lib.download.downloader import Downloader
 
@@ -15,29 +16,33 @@ config.read("development.ini")
 class Table(object):
     SUPPORTED_FUNCS = ["eq", "gt", "lt", "gte", "lte", "neq"]
 
-    def __init__(self, records):
+    def __init__(self, group, name, records):
+        self.group = group
+        self.name = name
         self.records = records
+
+        self.tPartial = partial(Table, self.group, self.name)
 
     def _filter(self, func):
         return [elem for elem in filter(func, self.records)]
 
     def eq(self, field, value):
-        return Table(self._filter(lambda d: d[field] == value))
+        return self.tPartial(self._filter(lambda d: d[field] == value))
 
     def gt(self, field, value):
-        return Table(self._filter(lambda d: d[field] > value))
+        return self.tPartial(self._filter(lambda d: d[field] > value))
 
     def lt(self, field, value):
-        return Table(self._filter(lambda d: d[field] < value))
+        return self.tPartial(self._filter(lambda d: d[field] < value))
 
     def gte(self, field, value):
-        return Table(self._filter(lambda d: d[field] >= value))
+        return self.tPartial(self._filter(lambda d: d[field] >= value))
 
     def lte(self, field, value):
-        return Table(self._filter(lambda d: d[field] <= value))
+        return self.tPartial(self._filter(lambda d: d[field] <= value))
 
     def neq(self, field, value):
-        return Table(self._filter(lambda d: d[field] != value))
+        return self.tPartial(self._filter(lambda d: d[field] != value))
 
     def proccesQuery(self, query):
         table = self
@@ -67,7 +72,7 @@ class Table(object):
 
 class TableDownloadMixin(Table, Downloader):
 
-    def __init__(self, url, fileName):
+    def __init__(self, group, name, url, fileName):
         Table.__init__(self, [])
         self.fileName = os.path.join(
             os.getcwd(), config.get("app:main", "gluegov.data_directory"),
@@ -79,8 +84,8 @@ class TableDownloadMixin(Table, Downloader):
 
 class CSVTable(TableDownloadMixin, CSVParser):
 
-    def __init__(self, url, fileName):
-        TableDownloadMixin.__init__(self, url, fileName)
+    def __init__(self, group, name, url, fileName):
+        TableDownloadMixin.__init__(self, group, name, url, fileName)
         CSVParser.__init__(self, self.fileName)
 
 
