@@ -11,7 +11,9 @@ def test(request):
 @web
 def group(request):
     group = request.context
-    return action_ok(data={'names': tuple(group.names)})
+    return action_ok(data={'tables': {
+        name: table.fields for name, table in group.tables.items()
+    }})
 
 
 @web

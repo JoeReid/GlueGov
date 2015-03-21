@@ -30,8 +30,8 @@ class TableGroupResource(object):
         return TableResource(self.request, self.group, name)
 
     @property
-    def names(self):
-        return TableDownloadMixin.registry[self.group].keys()
+    def tables(self):
+        return TableDownloadMixin.registry[self.group]
 
     @property
     def template(self):
