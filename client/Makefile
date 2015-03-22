@@ -1,13 +1,18 @@
-install: cssreset-min.css jquery.min.js bootstrap.min.js bootstrap.min.css
+install: lib lib/cssreset-min.css lib/jquery.min.js lib/bootstrap.min.js lib/bootstrap.min.css
 
-cssreset-min.css:
-	ln -s ../server/externals/static/cssreset-min.css cssreset-min.css
+# These could be curled down later. I'm just linking to the ones we already have in the server
 
-jquery.min.js:
-	ln -s ../server/externals/static/jquery.min.js jquery.min.js
+lib:
+	mkdir lib
 
-bootstrap.min.js:
-	ln -s ../server/externals/static/js/bootstrap.min.js bootstrap.min.js
+lib/cssreset-min.css:
+	ln -s ../../server/externals/static/cssreset-min.css lib/cssreset-min.css
 
-bootstrap.min.css:
-	ln -s ../server/externals/static/css/bootstrap.min.css bootstrap.min.css
+lib/jquery.min.js:
+	ln -s ../../server/externals/static/jquery.min.js lib/jquery.min.js
+
+lib/bootstrap.min.js:
+	ln -s ../../server/externals/static/js/bootstrap.min.js lib/bootstrap.min.js
+
+lib/bootstrap.min.css:
+	ln -s ../../server/externals/static/css/bootstrap.min.css lib/bootstrap.min.css
