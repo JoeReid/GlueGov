@@ -6,7 +6,6 @@ import os
 import urllib.parse
 import configparser
 
-from functools import partial
 from collections import defaultdict
 from gluegov.lib.parsers import CSVParser
 from gluegov.lib.parsers import XLSParser
@@ -23,9 +22,6 @@ class Table(object):
         self.records = records
         self.fields = fields
 
-        self.tablePartial = None
-
-
     def _filter(self, func, value):
         types = [str, urllib.parse.unquote, int, float]
         for t in types:
@@ -40,30 +36,31 @@ class Table(object):
         return [record for record in self.records if func(record, value, type)]
 
     def eq(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) == v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) == v, value))
 
     def gt(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) > v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) > v, value))
 
     def lt(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) < v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) < v, value))
 
     def gte(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) >= v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) >= v, value))
 
     def lte(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) <= v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) <= v, value))
 
     def neq(self, field, value):
-        return self.tablePartial(self._filter(lambda d, v, t: t(d[field]) != v, value))
+        return Table(self.fields, self._filter(lambda d, v, t: t(d[field]) != v, value))
 
     def con(self, field, value):
         def contains(d, v, t):
             return v.lower() in t(d[field]).lower()
-        return self.tablePartial(self._filter(contains, value))
+
+        f = self._filter(contains, value)
+        return Table(self.fields, f)
 
     def proccesQuery(self, query):
-        self.tablePartial = partial(Table, self.fields)
         table = self
 
         if query:

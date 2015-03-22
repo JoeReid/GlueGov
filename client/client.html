@@ -61,9 +61,10 @@
 		<!-- Content -->
 		<div class="container body_container">
 			<div class="row">
-				<a id="top-ancor"></a>
 				<label for="town_name">Town/City</label>
-				<input id="town_name" type="text" placeholder="Enter a town name"/>
+				<input id="town_name" type="text" placeholder="Enter a town"/>
+				<label for="county">County</label>
+				<input id="county" type="text" placeholder="Enter a county"/>
 				<button id="submit">Submit</button>
 			</div>
 		</div>
@@ -74,16 +75,17 @@
 		  <!-- Nav tabs -->
 		  <ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#price_tab" aria-controls="price_tab" role="tab" data-toggle="tab">House Prices</a></li>
-			<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+			<li role="presentation"><a href="#libraries" aria-controls="libraries" role="tab" data-toggle="tab">Libraries</a></li>
 		  </ul>
 
 		  <!-- Tab panes -->
 		  <div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="price_tab"></div>
+			<div role="tabpanel" class="tab-pane active" id="price_tab">
 			  	<table class="table table-striped table-bordered" id="house_prices_table">
 				</table>
-			<div role="tabpanel" class="tab-pane" id="profile">
-				<table class="table table-striped table-bordered" id="jsd">
+			</div>
+			<div role="tabpanel" class="tab-pane" id="libraries">
+				<table class="table table-striped table-bordered" id="libraries_table">
 				</table>
 			</div>
 		  </div>
@@ -93,14 +95,12 @@
 		<script>
 			function drawTable(table, data) {
 				var fields = data.fields;
-				console.log(fields);
 				table.empty();
 
 				var header = "";
 				$.each(fields, function(i, field) {
 					header = header + "<th>" + field + "</th>"
 				});
-				console.log(header);
 				table.append('<tr>' + header + '</tr>');
 
 				var rows = "";
@@ -112,21 +112,42 @@
 					});
 
 					rows = rows + '<tr>' + row_s + '</tr>'
-				})
+				});
 				table.append(rows);
 
 			}
 
 			$('#submit').click(function() {
 				var town = $('#town_name').val();
+				var county = $('#county').val();
 
-				$('#price_tab').empty();
-				$('#price_tab').append('<h1>House Prices</h1>');
+				var query = "";
+				if (town) {
+					query += "&town=con:"+town
+				}
+				if (county) {
+					query += '&county=con:'+county
+				}
 				$.ajax(
-						"http://localhost:6543/landregistry/pricepaid?format=json&town=con:"+town, {
+						"http://localhost:6543/landregistry/pricepaid?format=json"+query, {
 						"success": function(data) {
 							var data = data.data;
 							drawTable($('#house_prices_table'), data);
+						}}
+				);
+
+				var query = "";
+				if (town) {
+					query += "&TOWN=con:"+town
+				}
+				if (county) {
+					query += '&COUNTY=con:'+county
+				}
+				$.ajax(
+						"http://localhost:6543/collectionstrust/publiclibrariescontact?format=json"+query, {
+						"success": function(data) {
+							var data = data.data;
+							drawTable($('#libraries_table'), data);
 						}}
 				)
 			});
