@@ -1,9 +1,9 @@
 GlueGov
 =======
 
-Surfacing disporate goverment spreadsheet data with a clean searchable API.
+Surfacing disparate government spreadsheet data with a clean searchable API.
 
-Created at [National Hack the Goverment 2015 London](http://hacks.rewiredstate.org/events/nhtg-2015-london/)
+Created at [National Hack the Goverment 2015 London](http://hacks.rewiredstate.org/events/nhtg-2015-london/) [Presentation Slides](https://docs.google.com/presentation/d/1sRNEdkk8OiqFnzO_av6AuO4Bj7bs9mnRDraIoulPqBU/edit?usp=sharing)
 
 
 Summary
