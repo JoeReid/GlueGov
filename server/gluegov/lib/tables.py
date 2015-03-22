@@ -55,7 +55,7 @@ class Table(object):
 
     def con(self, field, value):
         def contains(d, v, t):
-            return v.lower() in t(d[field]).lower()
+            return v.lower() in t(d[t(field)]).lower()
 
         f = self._filter(contains, value)
         return Table(self.fields, f)

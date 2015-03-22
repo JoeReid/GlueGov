@@ -74,8 +74,9 @@
 
 		  <!-- Nav tabs -->
 		  <ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#price_tab" aria-controls="price_tab" role="tab" data-toggle="tab">House Prices (2015)</a></li>
-			<li role="presentation"><a href="#libraries" aria-controls="libraries" role="tab" data-toggle="tab">Libraries</a></li>
+			  <li role="presentation" class="active"><a href="#price_tab" aria-controls="price_tab" role="tab" data-toggle="tab">House Prices (2015)</a></li>
+			  <li role="presentation"><a href="#libraries" aria-controls="libraries" role="tab" data-toggle="tab">Libraries</a></li>
+			  <li role="presentation"><a href="#population" aria-controls="population" role="tab" data-toggle="tab">Population (2011)</a></li>
 		  </ul>
 
 		  <!-- Tab panes -->
@@ -86,6 +87,10 @@
 			</div>
 			<div role="tabpanel" class="tab-pane" id="libraries">
 				<table class="table table-striped table-bordered" id="libraries_table">
+				</table>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="population">
+				<table class="table table-striped table-bordered" id="population_table">
 				</table>
 			</div>
 		  </div>
@@ -148,6 +153,21 @@
 						"success": function(data) {
 							var data = data.data;
 							drawTable($('#libraries_table'), data);
+						}}
+				);
+
+				var query = "";
+				if (county) {
+					query += '&Area name =con:'+county
+				}
+				if (town) {
+					query += '&Area name =con:'+town
+				}
+				$.ajax(
+						"http://localhost:6543/ons/population-and-household-estimates?format=json"+query, {
+						"success": function(data) {
+							var data = data.data;
+							drawTable($('#population_table'), data);
 						}}
 				)
 			});

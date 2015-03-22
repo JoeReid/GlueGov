@@ -36,10 +36,6 @@ class onsXLSTable(XLSTable):
                 self.records.append(rowDict)
 
 
-
-
-
-
 onsXLSTable(
     "ons",
     "population-and-household-estimates",
