@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network | Basic usage</title>
+  <script src="lib/jquery-2.1.3.min.js"></script> 
+  <script type="text/javascript" src="lib/dist/vis.js"></script>
+</head>
+
+<body style="position:absolute; top:0; bottom:0; left:0; right:0;">
+
+<div id="mynetwork" style="height:100%;"></div>
+
+<script type="text/javascript">
+  
+  var count = 0;
+
+  function getId() {
+    return count++;
+  }
+
+  /*// create an array with nodes
+  var nodes = [
+    {id: 1, label: 'Node 1'},
+    {id: 2, label: 'Node 2'},
+    {id: 3, label: 'Node 3'},
+    {id: 4, label: 'Node 4'},
+    {id: 5, label: 'Node 5'}
+  ];
+
+  // create an array with edges
+  var edges = [
+    {from: 1, to: 2},
+    {from: 1, to: 3},
+    {from: 2, to: 4},
+    {from: 2, to: 5},
+    {from: 'dclg', to: 5}
+  ];*/
+
+    $.getJSON("http://localhost:6543/?format=json", function( data ) {
+        var nodes = [];
+        var edges = [];
+
+        nodes.push({id: getId(), label: "GlueGov"});
+        $.each( data.data.groups, function( i, fields){
+            var fieldsId = getId();
+            nodes.push({id: fieldsId, label: fields});
+            edges.push({from: 0, to: fieldsId});
+
+            $.getJSON("http://localhost:6543/" + fields +"?format=json", function( data2 ) {
+                $.each(Object.keys(data2.data.tables), function(i,fields2){
+                    var fields2Id = getId();
+                    nodes.push({id: fields2Id, label: fields2});
+                    edges.push({from: fieldsId, to: fields2Id});
+
+                    $.each(data2.data.tables, function(i, fields3){
+                        $.each(fields3, function (i, fields4) {
+                            var fieldsfinalId = getId();
+                            nodes.push({id: fieldsfinalId, label: fields4});
+                            edges.push({from: fields2Id, to: fieldsfinalId});
+                        });
+                    });
+                });
+
+                // create a network
+                var container = document.getElementById('mynetwork');
+                var data= {
+                    nodes: nodes,
+                    edges: edges,
+                };
+                var options = {
+                    width: '100%',
+                    height: '100%'
+                };
+                var network = new vis.Network(container, data, options);
+
+
+            });
+        });
+    });
+
+
+
+</script>
+</body>
+</html>
