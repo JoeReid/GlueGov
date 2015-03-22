@@ -2,7 +2,6 @@
 xls, cvs, odt?) and makes the parsed content easilty addressable.
 """
 import xlrd
-from csv import DictReader
 
 
 class Parser(object):
@@ -15,19 +14,31 @@ class Parser(object):
         raise NotImplementedError
 
 
-class CSVParser(Parser, DictReader):
+class CSVParser(Parser):
 
-    def parse(self, *args, **kwargs):
+    def parse(self, *args, keyRow=0, firstRow=None, lastRow=None, fieldnames=None):
         """ Parse the CSV file
         :param args: arguments passed to csv.DictReader
         :param kwargs: keyword arguments passed to csv.DictReader
         :return:
         """
         with open(self.fileName, "r") as f:
-            dictReader = DictReader(f, *args, **kwargs)
-            self.fields = dictReader.fieldnames
-            self.records = [r for r in dictReader]
-            return self
+            lines = f.readlines()
+
+            if fieldnames is not None:
+                self.fields = fieldnames
+            else:
+                self.fields = lines[keyRow].split(",")
+
+            if firstRow is None:
+                firstRow = keyRow + 1
+            if lastRow is None:
+                lastRow = len(lines)-firstRow
+
+            for i in range(firstRow, lastRow+1):
+                data = lines[i].split(",")
+                self.records.append(dict(zip(self.fields, data)))
+
 
 class XLSParser(Parser):
 
