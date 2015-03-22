@@ -15,7 +15,7 @@ config.read("development.ini")
 
 
 class Table(object):
-    SUPPORTED_FUNCS = ["eq", "gt", "lt", "gte", "lte", "neq"]
+    SUPPORTED_FUNCS = ["eq", "gt", "lt", "gte", "lte", "neq", "con"]
 
     def __init__(self, records):
         self.records = records
@@ -51,6 +51,11 @@ class Table(object):
 
     def neq(self, field, value):
         return Table(self._filter(lambda d, v, t: t(d[field]) != v, value))
+
+    def con(self, field, value):
+        def contains(d, v, t):
+            return v in t(d[field]).lower()
+        return Table(self._filter(contains, value))
 
     def proccesQuery(self, query):
         table = self
