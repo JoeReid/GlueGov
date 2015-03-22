@@ -31,8 +31,8 @@ def table(request):
     offset = int(request.params.get('offset', 0))
 
     return action_ok(data={
-        'group': table.group,
-        'name': table.name,
+        'group': getattr(table, 'group', ''),
+        'name': getattr(table, 'name', ''),
         'fields': table.fields,
         'list': records[offset:offset + limit],
         'total': total,
