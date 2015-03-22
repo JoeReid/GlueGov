@@ -2,6 +2,7 @@
 xls, cvs, odt?) and makes the parsed content easilty addressable.
 """
 import xlrd
+import csv
 
 
 class Parser(object):
@@ -23,12 +24,13 @@ class CSVParser(Parser):
         :return:
         """
         with open(self.fileName, "r") as f:
-            lines = f.readlines()
+            reader = csv.reader(f)
+            lines = [x for x in reader]
 
             if fieldnames is not None:
                 self.fields = fieldnames
             else:
-                self.fields = lines[keyRow].split(",")
+                self.fields = lines[keyRow]
 
             if firstRow is None:
                 firstRow = keyRow + 1
@@ -36,7 +38,7 @@ class CSVParser(Parser):
                 lastRow = len(lines)-firstRow
 
             for i in range(firstRow, lastRow+1):
-                data = lines[i].split(",")
+                data = lines[i]
                 self.records.append(dict(zip(self.fields, data)))
 
 
