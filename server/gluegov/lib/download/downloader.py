@@ -20,10 +20,9 @@ class Downloader(object):
             try:
                 future = Downloader.downloadExecutor.submit(self._download)
                 future.result()
+                logging.info("Downloading " + dest + ": Done")
             except Exception:
                 logging.error("Downloading " + dest + " failure!")
-
-            logging.info("Downloading " + dest + ": Done")
 
     def _download(self):
         response = requests.get(self.url)
