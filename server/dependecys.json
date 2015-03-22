@@ -56,7 +56,7 @@
         
     "python_lib": {
         "source": "https://raw.github.com/calaldees/libs/master/python3/",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "target": [
             "lib/__init__.py",
             "lib/misc.py",
