@@ -17,8 +17,6 @@
 		<script src="lib/bootstrap.min.js"></script>
 		
 		<link href="client.css" rel="stylesheet" />
-		<script src="client.js"></script>
-
 	</head>
 
 	<body>
@@ -65,10 +63,41 @@
 			<div class="row">
 				<a id="top-ancor"></a>
 				<input id="town_name" type="text" placeholder="Enter a town name"/>
-				
+				<button id="submit">Submit</button>
 			</div>
 		</div>
 
+
+		<div role="tabpanel">
+
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a href="#price_tab" aria-controls="price_tab" role="tab" data-toggle="tab">House Prices</a></li>
+			<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="price_tab"></div>
+			<div role="tabpanel" class="tab-pane" id="profile"></div>
+		  </div>
+
+		</div>
+
+		<script>
+			$('#submit').click(function() {
+				var town = $('#town_name').val();
+
+				$('#price_tab').empty();
+				$('#price_tab').append('<h1>House Prices</h1>');
+				$.ajax(
+						"http://localhost:6543/landregistry/pricepaid?town=con:"+town, {
+						"success": function(data) {
+							$('#price_tab').append(data);
+						}}
+				)
+			});
+		</script>
 		
 	</body>
 
