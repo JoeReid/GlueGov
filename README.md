@@ -22,6 +22,23 @@ There are multiple government departments that publish data via spreadsheets. Al
 2. ) With the API, new frontend and user explorable services are possible
 
 
+Future Development
+------------------
+
+### API Features ###
+
+* Add more datasets
+    * Currently only a few prototype examples are avalable
+* Add automatic redownload and updating of sources datasets
+    * The API could return the last datetime the source was updated and provide links back to the orginal source material
+* API endpoint to search accoss multiple sources automatically (currenly searching is explicit for each type of table)
+
+### Overall ####
+
+* It would be nice if this API concept was officailly supported and maintained by the goverment.
+* A user visible web service could be created to allow everyday people to explore the data and ask there own questions. 
+
+
 Supported Datasets
 ------------------
 See [server/gluegov/data](https://github.com/JoeReid/GlueGov/tree/master/server/gluegov/data) for current plugins
@@ -42,10 +59,14 @@ Project Structure
 Setup/Running
 -------------
 
-* `git clone https://github.com/JoeReid/GlueGov.git && cd GlueGov/server && make run && python -m webbrowser -t "http://localhost:6543/"` (this should automatically download the source datasets and may take some time)
-* Filter examples
-	* http://localhost:6543/traffic/majorroads?Year=eq:2013
-	* http://localhost:6543/landregistry/pricepaid?format=json&price=lte:100000
+* server
+    * `git clone https://github.com/JoeReid/GlueGov.git && cd GlueGov/server && make run && python -m webbrowser -t "http://localhost:6543/"` (this should automatically download the source datasets and may take some time)
+    * Filter examples
+	    * http://localhost:6543/traffic/majorroads?Year=eq:2013
+	    * http://localhost:6543/landregistry/pricepaid?format=json&price=lte:100000
+* client
+    * view the `client/client.html` file (after running `make`)
+
 
 Team
 ----
